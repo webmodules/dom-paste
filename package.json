@@ -1,0 +1,31 @@
+{
+  "name": "dom-paste",
+  "version": "1.0.0",
+  "description": "Gets dom content from the clipboard on paste events",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "tsc --module commonjs --declaration index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/webmodules/dom-paste.git"
+  },
+  "keywords": [
+    "browser",
+    "dom",
+    "paste",
+    "html",
+    "rich",
+    "text",
+    "clipboard"
+  ],
+  "author": "Marco Aurelio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webmodules/dom-paste/issues"
+  },
+  "homepage": "https://github.com/webmodules/dom-paste",
+  "devDependencies": {
+    "typescript": "~1.0.1"
+  }
+}
