@@ -40,6 +40,7 @@ is always fired asynchronously.
 
 *More extensive compability info will be available soon*
 
-## Remarks
+# Remarks
 
 * On Firefox for OS X pasting works but only results in plain text. This is actually a browser limitation/bug, and happens on all contenteditable text fields.
+* The DOM structure produced by different browsers on paste varies wildly. This module does not attempt to do any sort of normalization.
