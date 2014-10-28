@@ -1,5 +1,5 @@
 
-function domPaste(e: Event, callback: (data: DocumentFragment) => void) {
+function domPaste(e: Event, callback: (data: HTMLElement) => void) {
 
   // get selection object
   var selection = window.getSelection();
@@ -28,17 +28,14 @@ function domPaste(e: Event, callback: (data: DocumentFragment) => void) {
       selection.addRange(originalRange);
     }
 
-    // move content to a document fragment
-    var fragment = document.createDocumentFragment();
-    while (container.firstChild) {
-      fragment.appendChild(container.firstChild);
-    }
+    // avoid having handler fire again if changes
+    // are made within the callback
+    observer.disconnect();
 
     try {
-      callback(fragment);
+      callback(container);
     } finally {
-      // stop observing and remove temporary container
-      observer.disconnect();
+      // remove temporary container
       document.body.removeChild(container);
     }
   });
