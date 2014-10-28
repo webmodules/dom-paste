@@ -1,6 +1,6 @@
 # dom-paste
 
-Retrieve the clipboard content as a `DocumentFragment` on a `paste` event.
+Retrieve the clipboard content as an `HTMLElement` on a `paste` event.
 
 # Usage
 
@@ -12,19 +12,20 @@ var domPaste = require('dom-paste');
 // ...
 
 el.addEventListener('paste', function(e) { 
-  domPaste(e, function(fragment) {
-    // do something with fragment
+  domPaste(e, function(content) {
+    // do something with content
   });
 }, false)
 ```
 
-Where `el` is a content-editable HTMLElement, and `fragment` is the returned `DocumentFragment` containing the pasted content. The callback function is called asynchronously. 
+Where `el` is a content-editable HTMLElement, and `content` is the returned `HTMLElement` containing the pasted content. The callback function is called asynchronously. 
 
 # Implementation Details
 
 A temporary contenteditable element is created, and the input focus is shifted to it. A `MutationObserver` is used to detect changes on the temporary element's DOM.
-It's contents are then extracted and placed into a `DocumentFragment`, which is passed to the callback. Due to the async nature of the `MutationObserver` API, the callback
-is always fired asynchronously.
+This temporary element is then passed to the callback. Due to the async nature of the `MutationObserver` API, the callback
+is always fired asynchronously. The temporary element is kept in the document until the callback returns, so that `.getComputedStyle()` calls can be made on its contents.
+After the callback returns, it's removed from the document automatically.
 
 # Compability
 
