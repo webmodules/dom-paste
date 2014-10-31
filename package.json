@@ -27,5 +27,11 @@
   "homepage": "https://github.com/webmodules/dom-paste",
   "devDependencies": {
     "typescript": "~1.0.1"
+  },
+  "dependencies": {
+    "current-range": "~1.1.0",
+    "current-selection": "~1.1.0",
+    "selection-is-backward": "~1.0.0",
+    "selection-set-range": "~1.0.0"
   }
 }
