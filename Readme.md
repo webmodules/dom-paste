@@ -11,14 +11,14 @@ var domPaste = require('dom-paste');
 
 // ...
 
-el.addEventListener('paste', function(e) { 
+el.addEventListener('paste', function(e) {
   domPaste(e, function(content) {
     // do something with content
   });
 }, false)
 ```
 
-Where `el` is a content-editable HTMLElement, and `content` is the returned `HTMLElement` containing the pasted content. The callback function is called asynchronously. 
+Where `el` is a content-editable HTMLElement, and `content` is the returned `HTMLElement` containing the pasted content. The callback function is called asynchronously.
 
 # Implementation Details
 
