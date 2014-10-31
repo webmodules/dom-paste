@@ -1,18 +1,34 @@
+/// <reference path='types.d.ts' />
+
+/**
+ * Module dependencies.
+ */
+
+import setRange = require('selection-set-range');
+import isBackward = require('selection-is-backward');
+import currentRange = require('current-range');
+import currentSelection = require('current-selection');
+
+/**
+ * DOM based "paste" event handler.
+ *
+ * @public
+ */
 
 function domPaste(e: Event, callback: (data: HTMLElement) => void) {
 
-  // get selection object
-  var selection = window.getSelection();
-
-  // store original selection range
-  var originalRange = (selection.rangeCount > 0) ? selection.getRangeAt(0) : null;
+  // TODO: use `get-document` here
+  var doc: Document = document;
+  var selection: Selection = currentSelection(doc);
+  var backward: boolean = isBackward(selection);
+  var range: Range = currentRange(selection);
 
   // create temporary content editable contaner
-  var container = document.createElement('div');
+  var container: HTMLElement = doc.createElement('div');
   container.contentEditable = 'true';
-  var br = document.createElement('br'); // needed by Firefox
+  var br: HTMLElement = doc.createElement('br'); // needed by Firefox
   container.appendChild(br);
-  document.body.appendChild(container);
+  doc.body.appendChild(container);
 
   // observer for dom mutations in container
   var observer = new MutationObserver(function() {
@@ -23,9 +39,8 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
 
     // restore focus and original selection range
     (<HTMLElement>e.target).focus();
-    if (originalRange) {
-      selection.removeAllRanges();
-      selection.addRange(originalRange);
+    if (range) {
+      setRange(selection, range, backward);
     }
 
     // avoid having handler fire again if changes
@@ -36,7 +51,7 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
       callback(container);
     } finally {
       // remove temporary container
-      document.body.removeChild(container);
+      doc.body.removeChild(container);
     }
   });
 
@@ -49,10 +64,9 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
 
   // move focus and selection to temporary container
   container.focus();
-  var range = document.createRange();
-  range.selectNodeContents(container);
-  selection.removeAllRanges();
-  selection.addRange(range);
+  var selector: Range = doc.createRange();
+  selector.selectNodeContents(container);
+  setRange(selection, selector, false);
 
   // default paste behaviour will be handled by the browser inside the container,
   // triggering the mutation event.
