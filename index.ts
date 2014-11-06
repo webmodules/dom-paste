@@ -22,6 +22,10 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
   var selection: Selection = currentSelection(doc);
   var backward: boolean = isBackward(selection);
   var range: Range = currentRange(selection);
+  var target = <Node>e.target;
+  if (target.nodeType == Node.TEXT_NODE) {
+    target = target.parentNode;
+  }
 
   // create temporary content editable contaner
   var container: HTMLElement = doc.createElement('div');
@@ -38,7 +42,7 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
     }
 
     // restore focus and original selection range
-    (<HTMLElement>e.target).focus();
+    (<HTMLElement>target).focus();
     if (range) {
       setRange(selection, range, backward);
     }
