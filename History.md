@@ -1,4 +1,11 @@
 
+2.0.1 / 2014-11-06
+==================
+
+  * Fix bug where we attempted to focus a text node. (This happened
+    in Firefox under specific circumstances)
+  * Use webmodules for Range/Selection functionality.
+
 2.0.0 / 2014-10-27
 ==================
 
