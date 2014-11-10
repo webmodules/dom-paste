@@ -27,8 +27,13 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
   // create temporary content editable contaner
   var container: HTMLElement = doc.createElement('div');
   container.contentEditable = 'true';
+  container.style.position = 'fixed';
+  container.style.overflow = 'hidden';
+  container.style.width = container.style.height = container.style.top = container.style.left = '0px';
+
   var br: HTMLElement = doc.createElement('br'); // needed by Firefox
   container.appendChild(br);
+
   doc.body.appendChild(container);
 
   // observer for dom mutations in container
