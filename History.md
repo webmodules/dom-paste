@@ -1,4 +1,10 @@
 
+2.0.2 / 2014-11-10
+==================
+
+  * Use `position: fixed` to prevent the page from jumping.
+  * Use activeElement instead of target.
+
 2.0.1 / 2014-11-06
 ==================
 

@@ -1,6 +1,6 @@
 {
   "name": "dom-paste",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Gets dom content from the clipboard on paste events",
   "main": "index.js",
   "scripts": {
