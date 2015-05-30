@@ -23,7 +23,7 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
   var backward: boolean = isBackward(selection);
   var range: Range = currentRange(selection);
   var activeElement = <HTMLElement>doc.activeElement;
-  
+
   // create temporary content editable contaner
   var container: HTMLElement = doc.createElement('div');
   container.contentEditable = 'true';
@@ -36,8 +36,7 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
 
   doc.body.appendChild(container);
 
-  // observer for dom mutations in container
-  var observer = new MutationObserver(function() {
+  setTimeout(function() {
     // remove br element, if it's still there (Firefox fix)
     if (br.parentNode) {
       br.parentNode.removeChild(br);
@@ -49,23 +48,12 @@ function domPaste(e: Event, callback: (data: HTMLElement) => void) {
       setRange(selection, range, backward);
     }
 
-    // avoid having handler fire again if changes
-    // are made within the callback
-    observer.disconnect();
-
     try {
       callback(container);
     } finally {
       // remove temporary container
       doc.body.removeChild(container);
     }
-  });
-
-  observer.observe(container, {
-    childList: true,
-    attributes: true,
-    characterData: true,
-    subtree: true
   });
 
   // move focus and selection to temporary container
